@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LoLMatchChecker</title>
+    <!-- Linha necessária para importar o AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <h1>LoLMatchChecker</h1>
+
+    Busca:
+    <select id="pickList" name="pickList">
+      <option value="" disabled selected>Região:</option>
+      <option value="opcao1">BR</option>
+      <option value="opcao2">US</option>
+      <option value="opcao3">KR</option>
+    </select>
+
+    <form id="characterSearch">
+      <input
+        id="nickField"
+        type="text"
+        name="campo"
+        placeholder="Player Name + #TAG"
+      />
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script src="./components/script.js"></script>
+  </body>
+</html>
