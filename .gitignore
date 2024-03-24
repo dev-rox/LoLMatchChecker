@@ -1,0 +1,6 @@
+# Dependências geradas pelo npm
+node_modules
+package-lock.json
+
+# Arquivo de ambiente .env
+.env
