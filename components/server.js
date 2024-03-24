@@ -1,16 +1,17 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const fetch = require("node-fetch");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const RIOT_API_KEY = "RGAPI-00febb6b-55ea-45a1-a981-c51c1ef9d256";
+const RIOT_API_KEY = process.env.SECRET;
 
 app.use(cors());
 app.use(express.json());
 
 async function getPuuid(summonerName) {
-  console.log("rodou a func getPuuid");
+  console.log("1 - rodou a func getPuuid");
   const url = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}`;
   try {
     const response = await fetch(url, {
@@ -21,13 +22,13 @@ async function getPuuid(summonerName) {
     const data = await response.json();
     return data && data.puuid ? data.puuid : null; // Retorna 'puuid' se existir
   } catch (error) {
-    console.error("Erro ao acessar a API da Riot:", error);
+    console.error('Erro ao coletar "Puuid":', error);
     return null; // Retorna null em caso de erro
   }
 }
 
 async function getSummonerId(puuid) {
-  console.log("rodou a func getSummonerId");
+  console.log("2 - rodou a func getSummonerId");
   const url = `https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`;
   try {
     const response = await fetch(url, {
@@ -38,13 +39,13 @@ async function getSummonerId(puuid) {
     const data = await response.json();
     return data && data.id ? data.id : null; // Retorna 'id' se existir
   } catch (error) {
-    console.error("Erro ao acessar a API da Riot:", error);
+    console.error('Erro ao coletar "SummonerId":', error);
     return null; // Retorna null em caso de erro
   }
 }
 
 async function getElo(summonerId) {
-  console.log("rodou a func getElo");
+  console.log("3 - rodou a func getElo - 3");
   const url = `https://br1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}`;
   try {
     const response = await fetch(url, {
@@ -55,7 +56,7 @@ async function getElo(summonerId) {
     const data = await response.json();
     return data && data.length > 0 ? data : null; // Retorna as informações de classificação se existirem
   } catch (error) {
-    console.error("Erro ao acessar a API da Riot:", error);
+    console.error('Erro ao coletar "Elo":', error);
     return null; // Retorna null em caso de erro
   }
 }
@@ -63,11 +64,11 @@ async function getElo(summonerId) {
 app.get("/riot-api/summoner/:summonerName", async (req, res) => {
   const { summonerName } = req.params;
   const puuid = await getPuuid(summonerName);
-  if (puuid !== null) {
+  if (puuid) {
     const summonerId = await getSummonerId(puuid);
-    if (summonerId !== null) {
+    if (summonerId) {
       const elo = await getElo(summonerId);
-      if (elo !== null) {
+      if (elo) {
         res.json({ elo });
       } else {
         res.status(500).json({ error: "Erro ao obter o elo" });
