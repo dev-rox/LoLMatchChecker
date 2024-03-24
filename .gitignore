@@ -1,6 +1,7 @@
-# Dependências geradas pelo npm
+# Definição de .gitignore para PATHS
 node_modules
-package-lock.json
+.vscode
 
-# Arquivo de ambiente .env
+# Definição de .gitignore para arquivos
+package-lock.json
 .env
