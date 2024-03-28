@@ -1,7 +1,3 @@
 # LoLMatchChecker
 
-npm init -y
-npm install cors
-npm npm install node-fetch@2
-npm install express
-npm install dotenv
+Interface that uses a proxy server to send and receive data from summoners directly from the Riot API.
